@@ -19,10 +19,10 @@ const statechart = {
     loaded: {
       actions: [
         "sayHiAgain",
-        "useContext",
         (ctx, evt) => {
           console.log("I AM ANON", ctx, evt);
         },
+        "useContext",
       ],
       on: { next: "showUI" },
     },
@@ -35,6 +35,7 @@ const statechart = {
       console.log({ ctx, evt });
     },
     useContext: assign((ctx, evt) => {
+      console.log(ctx, evt);
       return {
         count: ctx.count + 1,
         message: "Count changed",
@@ -44,4 +45,4 @@ const statechart = {
 };
 
 const machine = new StateMachine(statechart, observer);
-machine.transition("loaded");
+machine.transition("loaded", { type: "whatever" });
