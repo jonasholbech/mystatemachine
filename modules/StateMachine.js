@@ -12,6 +12,7 @@ export class StateMachine {
   }
   //TODO: nested states?
   start() {
+    this._callActions({ type: "transition" });
     this._runListenerCallbacks({
       context,
       value: this.state,
@@ -21,6 +22,13 @@ export class StateMachine {
   //register a callback
   onTransition(callbackToRegister) {
     this.listenerCallbacks.push(callbackToRegister);
+  }
+  unsubscribe() {
+    //TODO:
+    /*unsubscribe: function (ev, callback) {
+      let x = events[ev].indexOf(callback);
+      events[ev].splice(x, 1);
+    },*/
   }
   transition(transitionName, evtObj = { type: "transition" }) {
     console.log("before:", { context });

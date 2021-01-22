@@ -4,3 +4,7 @@
 nav {
   background: rebeccapurple;
 }
+.hidden,
+[data-hidden="true"] {
+  display: none;
+}
