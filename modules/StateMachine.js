@@ -11,7 +11,6 @@ export class StateMachine {
     context = statechart.context || {};
   }
   //TODO: nested states?
-  //start service, like https://xstate.js.org/docs/guides/start.html
   start() {
     this._runListenerCallbacks({
       context,

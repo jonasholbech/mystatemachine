@@ -1,6 +1,6 @@
 import FLIP from "./modules/FLIP.js";
 import { StateMachine, assign } from "./modules/StateMachine.js";
-import observer from "./modules/Observer";
+
 import * as helpers from "./modules/helpers";
 
 const statechart = {
@@ -38,7 +38,7 @@ const statechart = {
   },
 };
 
-const machine = new StateMachine(statechart, observer);
+const machine = new StateMachine(statechart);
 machine.onTransition(transitionEnded);
 machine.start();
 const nav = document.querySelector("nav");
@@ -50,13 +50,5 @@ nav.addEventListener("click", (e) => {
 
 function transitionEnded(state) {
   console.log(state);
-  const nav = document.querySelector("nav");
-  nav.innerHTML = "";
-  document.querySelector("h1").textContent = state.value;
-  for (let possible in state.possibleTransitions) {
-    const button = document.createElement("button");
-    button.textContent = possible;
-    button.dataset.action = possible;
-    nav.appendChild(button);
-  }
+  helpers.setAvailableTransitions(state);
 }

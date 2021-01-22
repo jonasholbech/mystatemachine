@@ -1,18 +1,11 @@
-import FLIP from "./FLIP";
-export function setup(machine) {
-  /*console.log(machine);
-  setTimeout(evl, 1500);
-
-  function evl(e) {
-    machine.transition("loaded");
-    //document.body.removeEventListener("transitionend", evl);
-  }*/
+export function setAvailableTransitions(state) {
+  const nav = document.querySelector("nav");
+  nav.innerHTML = "";
+  document.querySelector("h1").textContent = state.value;
+  for (let possible in state.possibleTransitions) {
+    const button = document.createElement("button");
+    button.textContent = possible;
+    button.dataset.action = possible;
+    nav.appendChild(button);
+  }
 }
-
-export function loaded(machine) {
-  /*setTimeout(() => {
-    machine.transition("next");
-  }, 500);*/
-}
-
-//First, transition, last, inverse, play
