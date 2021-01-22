@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+.wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.sliderContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  overflow: hidden;
+}
+.slider {
+  transform: translateX(-50vw);
+  background: red;
+  width: 50vw;
+  height: 100vh;
+  transition: all 2s;
+}
+.slider:nth-child(2) {
+  transform: translateX(50vw);
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+}
+nav {
+  background: hotpink;
+  transition: all 3s;
+  height: 100px;
+  position: sticky;
+}
+#home,
+#products,
+#about,
+#contact {
+  width: 100vw;
+  height: calc(100vh - 100px);
+  background: limegreen;
+  grid-row: 2/3;
+  grid-column: 1/2;
+  transition: transform 1s;
+}
+#home {
+  transform: translateY(-100vh);
+  background: hsl(60, 70%, 70%);
+}
+#products {
+  transform: translateY(100vh);
+  background: hsl(120, 70%, 70%);
+}
+#about {
+  transform: translateX(-100vw);
+  background: hsl(180, 70%, 70%);
+}
+#contact {
+  transform: translateX(100vw);
+  background: hsl(240, 70%, 70%);
+}
+body[data-state="setup"] .slider {
+  transform: translateX(0vw);
+}
+body[data-state="setup"] .slider:nth-child(2) {
+  transform: translateX(0vw);
+}
+body[data-state="setup"] nav,
+body[data-state="loaded"] nav {
+  transform: translateY(-120px);
+}
+body[data-state="home"] .wrapper > div,
+body[data-state="products"] .wrapper > div,
+body[data-state="about"] .wrapper > div,
+body[data-state="contact"] .wrapper > div {
+}
+
+body[data-state="home"] #home {
+  z-index: 10;
+  opacity: 1;
+  transform: translate(0, 0);
+}
+body[data-state="products"] #products {
+  z-index: 10;
+  opacity: 1;
+  transform: translate(0, 0);
+}
+body[data-state="about"] #about {
+  z-index: 10;
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+body[data-state="contact"] #contact {
+  z-index: 10;
+  opacity: 1;
+  transform: translate(0, 0);
+}
