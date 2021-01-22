@@ -12,6 +12,7 @@ const statechart = {
   },
   states: {
     setup: {
+      actions: ["sayHiAgain"],
       on: {
         loaded: "loaded",
       },
@@ -25,7 +26,9 @@ const statechart = {
     },
   },
   actions: {
-    sayHiAgain: (ctx, evt) => {},
+    sayHiAgain: (ctx, evt) => {
+      console.log("Hi!");
+    },
     useContext: assign((ctx, evt) => {
       return {
         count: ctx.count + 1,
@@ -37,8 +40,7 @@ const statechart = {
 
 const machine = new StateMachine(statechart, observer);
 machine.onTransition(transitionEnded);
-machine.transition("loaded", { type: "whatever" });
-
+machine.start();
 const nav = document.querySelector("nav");
 nav.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
@@ -50,6 +52,7 @@ function transitionEnded(state) {
   console.log(state);
   const nav = document.querySelector("nav");
   nav.innerHTML = "";
+  document.querySelector("h1").textContent = state.value;
   for (let possible in state.possibleTransitions) {
     const button = document.createElement("button");
     button.textContent = possible;

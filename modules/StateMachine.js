@@ -2,6 +2,7 @@ let context = {};
 export class StateMachine {
   constructor(statechart) {
     this.history = [];
+    this.running = false;
     this.state = statechart.initial;
     this.transitions = statechart.states;
     this.actions = statechart.actions || {};
@@ -11,28 +12,13 @@ export class StateMachine {
   }
   //TODO: nested states?
   //start service, like https://xstate.js.org/docs/guides/start.html
-  _callActions(evtObj) {
-    const actions = this.transitions[this.state].actions || [];
-    console.log(actions);
-    actions.forEach((func) => {
-      //Call anon function
-      if (typeof func === "function") {
-        console.log("calling anonymous function");
-        func(context, evtObj);
-        // call "functions" and assign() functions
-      } else if (typeof this.actions[func] === "function") {
-        console.log("calling ", func, this.actions[func]);
-        this.actions[func](context, evtObj);
-      }
+  start() {
+    this._runListenerCallbacks({
+      context,
+      value: this.state,
+      possibleTransitions: this.transitions[this.state].on,
     });
   }
-  _runListenerCallbacks(obj) {
-    let length = this.listenerCallbacks.length;
-    for (let index = 0; index < length; index++) {
-      this.listenerCallbacks[index](obj);
-    }
-  }
-
   //register a callback
   onTransition(callbackToRegister) {
     this.listenerCallbacks.push(callbackToRegister);
@@ -56,6 +42,27 @@ export class StateMachine {
       possibleTransitions: this.transitions[this.state].on,
     });
     return this.state;
+  }
+
+  _callActions(evtObj) {
+    const actions = this.transitions[this.state].actions || [];
+    actions.forEach((func) => {
+      //Call anon function
+      if (typeof func === "function") {
+        console.log("calling anonymous function");
+        func(context, evtObj);
+        // call "functions" and assign() functions
+      } else if (typeof this.actions[func] === "function") {
+        console.log("calling ", func, this.actions[func]);
+        this.actions[func](context, evtObj);
+      }
+    });
+  }
+  _runListenerCallbacks(obj) {
+    let length = this.listenerCallbacks.length;
+    for (let index = 0; index < length; index++) {
+      this.listenerCallbacks[index](obj);
+    }
   }
 }
 
