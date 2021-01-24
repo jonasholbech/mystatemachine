@@ -17,7 +17,7 @@ export default class FLIP {
     this.first = JSON.parse(this.el.dataset.first);
     return this;
   }
-  logFinalPosition() {
+  logLastPosition() {
     this.last = this.el.getBoundingClientRect();
     return this;
   }
@@ -43,21 +43,22 @@ export default class FLIP {
     if (!this.scale) {
       transform = `translate(${deltaX}px, ${deltaY}px)`;
     }
+
     const x = this.el.animate(
       [
         {
           transformOrigin: "top left",
-          transform
+          transform,
         },
         {
           transformOrigin: "top left",
-          transform: "none"
-        }
+          transform: "none",
+        },
       ],
       {
         duration: duration,
         easing: "ease-in-out",
-        fill: "both"
+        fill: "both",
       }
     );
     x.onfinish = callback;

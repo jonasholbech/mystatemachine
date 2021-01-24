@@ -1,10 +1,38 @@
 * {
   box-sizing: border-box;
 }
-nav {
-  background: rebeccapurple;
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
-.hidden,
-[data-hidden="true"] {
-  display: none;
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+main article {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  background: white;
+  color: black;
+  padding: 1rem;
+}
+main article img {
+  margin-top: auto;
+}
+main h2 {
+  font-size: 1.441rem;
+  letter-spacing: 0rem;
+  grid-column: 1/-1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
 }

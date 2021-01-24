@@ -21,17 +21,19 @@ export class StateMachine {
   }
   //register a callback
   onTransition(callbackToRegister) {
+    //TODO: Should this be called subscribe?
     this.listenerCallbacks.push(callbackToRegister);
   }
-  unsubscribe() {
-    //TODO:
-    /*unsubscribe: function (ev, callback) {
-      let x = events[ev].indexOf(callback);
-      events[ev].splice(x, 1);
-    },*/
+  unsubscribe(callback) {
+    //TODO: subscribe to specific transitions?
+    const index = this.listenerCallbacks.indexOf(callback);
+    this.listenerCallbacks.splice(index, 1);
+  }
+  once(callback, transition) {
+    //TODO: ? subscribe, and automatically unsubscribe on transition
   }
   transition(transitionName, evtObj = { type: "transition" }) {
-    console.log("before:", { context });
+    console.log(evtObj);
     const nextState = this.transitions[this.state].on[transitionName];
     if (!nextState) {
       throw new Error(`invalid: ${this.state} -> ${transitionName}`);
@@ -66,8 +68,7 @@ export class StateMachine {
     });
   }
   _runListenerCallbacks(obj) {
-    let length = this.listenerCallbacks.length;
-    for (let index = 0; index < length; index++) {
+    for (let index = 0; index < this.listenerCallbacks.length; index++) {
       this.listenerCallbacks[index](obj);
     }
   }
